@@ -71,3 +71,104 @@ while True:
     else:
         print("Vale valik. Proovi uuesti.")
 
+
+
+
+#Ül6
+
+def sisseastumine():
+    n=int(input("Sisestage abiturientide arv: "))
+    abiturendid=[]
+    punktid=[]
+
+    for i in range(n):
+        nimi=input(f"Sisestage abiturendi nimi {i+1}: ")
+        punkt=float(input(f"Sisestage {nimi} punktid: "))
+        abiturendid.append(nimi)
+        punktid.append(punkt)
+
+    return abiturendid,punktid
+
+def kuvada_nimed_ja_punktid(abiturendid,punktid):
+    for i in range(len(abiturendid)):
+        for j in range(i+1, len(abiturendid)):
+            if abiturendid[i]>abiturendid[j]:
+                abiturendid[i],abiturendid[j]=abiturendid[j],abiturendid[i]
+                punktid[i],punktid[j]=punktid[j],punktid[i]
+
+    print("\nAbiturientide nimekiri tähestikulises järjekorras:")
+    for i in range(len(abiturendid)):
+        print(f"{abiturendid[i]} - {punktid[i]}")
+
+def vastuvõetud_nimekiri(abiturendid, punktid):
+    k=int(input("Mitu inimest võetakse vastu? "))
+    nimed=abiturendid[:]
+    punktid_copy=punktid[:]
+
+    for i in range(len(punktid_copy)):
+        for j in range(i+1, len(punktid_copy)):
+            if punktid_copy[i]<punktid_copy[j]:
+                punktid_copy[i],punktid_copy[j]=punktid_copy[j],punktid_copy[i]
+                nimed[i],nimed[j]=nimed[j],nimed[i]
+
+    print("\nVastuvõetud:")
+    for i in range(min(k, len(nimed))):
+        print(f"{nimed[i]} - {punktid_copy[i]}")
+
+def halvimad_tulemused(abiturendid, punktid):
+    n=int(input("Mitu halvimat tulemust kuvada? "))
+    nimed=abiturendid[:]
+    punktid_copy=punktid[:]
+
+    for i in range(len(punktid_copy)):
+        for j in range(i+1, len(punktid_copy)):
+            if punktid_copy[i]>punktid_copy[j]:
+                punktid_copy[i],punktid_copy[j]=punktid_copy[j],punktid_copy[i]
+                nimed[i],nimed[j]=nimed[j],nimed[i]
+
+    print(f"\n{n} halvimat tulemust:")
+    for i in range(min(n, len(nimed))):
+        print(f"{nimed[i]} - {punktid_copy[i]}")
+
+def keskmine_vastuvõetute_punktid(punktid):
+    k=int(input("Mitu inimest võeti vastu? "))
+    punktid_copy=punktid[:]
+
+    for i in range(len(punktid_copy)):
+        for j in range(i+1, len(punktid_copy)):
+            if punktid_copy[i]<punktid_copy[j]:
+                punktid_copy[i],punktid_copy[j]=punktid_copy[j],punktid_copy[i]
+
+    vastuvõetud=punktid_copy[:k]
+    if vastuvõetud:
+        keskmine=sum(vastuvõetud)/len(vastuvõetud)
+        print(f"Sisseastunute keskmine punktisumma: {keskmine:.2f}")
+    else:
+        print("Vastuvõetud puuduvad.")
+
+#Menu
+abiturendid, punktid=sisseastumine()
+
+while True:
+    print("\n1 - Kuvage abiturientide nimed koos punktidega tähestikulises järjekorras")
+    print("2 - Näidake vastuvõetud isikute nimekiri")
+    print("3 - Leidke n halvimat tulemust")
+    print("4 - Arvutage vastuvõetute keskmine")
+    print("5 - Välju")
+
+    valik=input("Valik: ")
+
+    if valik=="1":
+        kuvada_nimed_ja_punktid(abiturendid, punktid)
+    elif valik=="2":
+        vastuvõetud_nimekiri(abiturendid, punktid)
+    elif valik=="3":
+        halvimad_tulemused(abiturendid, punktid)
+    elif valik=="4":
+        keskmine_vastuvõetute_punktid(punktid)
+    elif valik=="5":
+        print("Programm lõpetati.")
+        break
+    else:
+        print("Vale valik. Proovi uuesti.")
+
